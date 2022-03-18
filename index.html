@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="jspsych-6.3.0/jspsych.js"></script>
-    <script src="jspsych-6.3.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <link rel="stylesheet" href="jspsych-6.3.0/css/jspsych.css">
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body></body>
   <script>
@@ -12,10 +12,12 @@
     var PRIME_DURATION = 150;
     var PRIME_TARGET_GAP = 50;
 
+    var jsPsych = initJsPsych({});
+
     /* create instructions */
 
     var instructions = {
-      type: 'html-keyboard-response',
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>In the following experiment you will be shown pairs of words and asked to determine
         whether the second word in each pair is a real word (e.g., "group" or "red") or a
         non-word (e.g., "gork" or "polie").</p>
@@ -27,13 +29,13 @@
         <p>To indicate that a word is a non-word, press the "N" key on the keyboard.</p>
         <p>Press the space bar to continue.</p>`,
       choices: [' '] // note: this tells the plugin to wait for the SPACEBAR key to be pressed
-      // this part I changed from Josh's demo because jsPsych 6.3 allows us to avoid the ASCII key 
+      // this part I changed from Josh's demo because as of jsPsych 6.3 we can avoid the ASCII key 
       // (don't worry about that distinction unless you're interested)
       // (if you are interested, here are the shortcuts: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
     }
 
     var pre_test_instructions = {
-      type: 'html-keyboard-response',
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>First, let's go through a quick pre-test to help familiarize you with the format of the
         experiment. This pre-test will consist of three pairs of words similar to those you will
         be seeing during the actual test.</p>
@@ -44,7 +46,7 @@
     }
 
     var main_task_instructions = {
-      type: 'html-keyboard-response',
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>The pre-test has ended. Now you will complete the actual test, which is longer. It
         should take about ten minutes to complete.</p>
         <p>Remember to answer as quickly as you can without diminishing your accuracy.</p>
@@ -56,18 +58,18 @@
     /* create the task */
 
     var fixation = {
-      type: 'html-keyboard-response',
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: '<p style="font-size: 48px; font-family: monospace;">+</p>',
-      choices: jsPsych.NO_KEYS,
+      choices: "NO_KEYS", // note I've replaced the old jsPsych.NO_KEYS with the string "NO_KEYS" which is used now
       trial_duration: FIXATION_DURATION
     }
 
     var prime = {
-      type: 'html-keyboard-response',
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
         return `<p style="font-size: 48px; font-family: monospace;">${jsPsych.timelineVariable('prime', true).toUpperCase()}</p>`
       },
-      choices: jsPsych.NO_KEYS,
+      choices: "NO_KEYS", // note I've replaced the old jsPsych.NO_KEYS with the string "NO_KEYS" which is used now
       trial_duration: PRIME_DURATION,
       post_trial_gap: PRIME_TARGET_GAP,
       data: {
@@ -76,7 +78,7 @@
     }
 
     var target = {
-      type: 'html-keyboard-response',
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
         return `<p style="font-size: 48px; font-family: monospace;">${jsPsych.timelineVariable('target', true).toUpperCase()}</p>`
       },
@@ -127,7 +129,7 @@
     /* create the end screen */
 
     var end = {
-      type: `html-keyboard-response`,
+      type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>You're done! A .csv file containing your data should be automatically downloading right now.
         Check your default downloads location to find it. Once you've found it you can close the experiment.</p>`,
       on_load: function(){
@@ -148,9 +150,8 @@
     timeline.push(test);
     timeline.push(end);
 
-    jsPsych.init({
-      timeline: timeline,
-      experiment_width: 850 // note: this makes sure the window is at least 850 pixels wide
-    });
+    /* start the experiment */
+    jsPsych.run(timeline);
+
   </script>
 </html>

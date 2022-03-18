@@ -1,7 +1,7 @@
-# epsy5200_s21_homework08
-EPSY 5200 Spring 2021 Homework 8 -- Adaptation of jsPsych Demo
+# epsy5123_s22_homework08
+EPSY 5123 Spring 2022 Homework 8 -- Adaptation of jsPsych Demo
 
-This is an adaptation of the jsPsych demo on using csv files (lexical decision task). Here we recreate the files at the beginning of the demo video (adapted for jsPsych 6.3, with a few notes in the html file) so that you can follow along:
+This is an adaptation of the jsPsych demo on using csv files (lexical decision task). Here we recreate the files at the beginning of the demo video (adapted for jsPsych 7.1, with a few notes in the html file) so that you can follow along:
 
 ## Video Link
 
