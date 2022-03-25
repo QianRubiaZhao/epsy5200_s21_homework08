@@ -3,6 +3,7 @@
   <head>
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="stimuli.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body></body>
@@ -41,7 +42,7 @@
         be seeing during the actual test.</p>
         <p>Remember, press "W" if the second word of a pair is a real word, and "N" if the
         second word of a pair is a non-word.</p>
-        <p>Press the spacebar to begin the pre-test.</p>`,
+        <p>Press the space bar to begin the pre-test.</p>`,
       choices: [' ']
     }
 
@@ -115,11 +116,7 @@
     /* create the test */
     var test = {
       timeline: [fixation, prime, target],
-      timeline_variables: [
-        {prime: 'stop', target: 'sign', condition: 'associative'},
-        {prime: 'money', target: 'troz', condition: 'nonword'},
-        {prime: 'craft', target: 'zip', condition: 'unrelated'}
-      ],
+      timeline_variables: test_stimuli,
       data: {
         phase: 'test'
       },
